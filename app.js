@@ -14,10 +14,53 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+// global variable for storing user posts
+let posts = [];
 
 
+// listen for initial GET request on port 3000 and return home page
+app.get('/', function(req, res) {
+
+  res.render("home", {
+    startingContent: homeStartingContent,
+    posts: posts
+  });
+})
+
+// render contacts page
+app.get("/contact", function(req, res) {
+  res.render("contact", {
+    startingContent: contactContent
+  });
+});
 
 
+// render about page
+app.get("/about", function(req, res) {
+  res.render("about", {
+    startingContent: aboutContent
+  });
+});
+
+
+// render compose page and form
+app.get("/compose", function(req, res) {
+  res.render("compose");
+})
+
+
+app.post("/compose", function(req, res) {
+
+  const post = {
+    title: req.body.postTitle,
+    content: req.body.postBody
+  };
+
+  posts.push(post);
+  res.redirect("/");
+})
+
+// start server
 app.listen(3000, function() {
   console.log("Server started on port 3000 at http://localhost:3000");
 });
