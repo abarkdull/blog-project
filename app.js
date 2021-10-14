@@ -28,19 +28,24 @@ let posts = [];
 
 app.get("/posts/:post", function(req, res) {
 
+  // get routing parameter
   let postTitle = _.lowerCase(req.params.post);
-
-  console.log(postTitle);
 
   let matchFound = false;
 
+  // if post found, render post on post.ejs page
   posts.forEach(post => {
-    if (post.title === postTitle) {
-      matchFound = true;
-    }
-  })
+    if (_.lowerCase(post.title) === postTitle) {
 
-  console.log("match found: " + matchFound);
+      res.render("post", {
+        postTitle: post.title,
+        postContent: post.content
+      });
+    }
+  });
+
+  // if match not found redirect back to home page
+  res.redirect("/");
 });
 
 // listen for initial GET request on port 3000 and return home page
