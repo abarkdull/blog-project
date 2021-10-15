@@ -19,13 +19,6 @@ app.use(express.static("public"));
 let posts = [];
 
 
-// app.get("news/:topic", function(req, res) {
-//   console.log(req.params.topic);
-// });
-
-// >>> prints: movies
-
-
 app.get("/posts/:post", function(req, res) {
 
   // get routing parameter
